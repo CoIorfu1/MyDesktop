@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"modules.h": "c",
+			"dbus.h": "c",
+			"lvgl.h": "c",
+			"dbus_server.h": "c",
+			"app_manager.h": "c",
+			"cstring": "cpp",
+			"lv_conf.h": "c",
+			"lv_drv_conf.h": "c",
+			"array": "cpp",
+			"string": "cpp",
+			"string_view": "cpp"
+		}
+	}
+}
