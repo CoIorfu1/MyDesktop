@@ -13,7 +13,7 @@ HomePage::~HomePage()
 
 void HomePage::onCustomAttrConfig()
 {
-    SetCustomLoadAnimType(PageManager::LOAD_ANIM_OVER_TOP);
+    SetCustomLoadAnimType(PageManager::LOAD_ANIM_NONE);
 }
 
 void HomePage::onViewLoad()
