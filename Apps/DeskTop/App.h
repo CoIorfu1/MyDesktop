@@ -2,7 +2,9 @@
 #define __APP_H_
 
 void App_Init(void);
-void BackHomePage();
+void BackHomePage(void);
 void App_Uninit(void);
+void* Pop(void*);
+void Pop(void);
 
 #endif

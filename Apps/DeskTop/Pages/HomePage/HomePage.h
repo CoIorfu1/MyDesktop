@@ -1,5 +1,5 @@
-#ifndef __DIALPLATE_PRESENTER_H
-#define __DIALPLATE_PRESENTER_H
+#ifndef _HOMEPAGE_H_
+#define _HOMEPAGE_H_
 
 #include "HomePageView.h"
 #include "../../Modules/Modules.h"
@@ -28,6 +28,7 @@ private:
 
 private:
     HomePageView View;
+    static void onTimer(lv_timer_t* timer);
 };
 
 }

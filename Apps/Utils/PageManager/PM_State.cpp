@@ -1,25 +1,3 @@
-/*
- * MIT License
- * Copyright (c) 2021 _VIFEXTech
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 #include "PageManager.h"
 #include "PM_Log.h"
 
@@ -32,7 +10,6 @@ void PageManager::StateUpdate(PageBase* base)
 {
     if (base == nullptr)
         return;
-    printf("switch state\n");
     switch (base->priv.State)
     {
     case PageBase::PAGE_STATE_IDLE:
@@ -46,8 +23,8 @@ void PageManager::StateUpdate(PageBase* base)
         break;
 
     case PageBase::PAGE_STATE_WILL_APPEAR:
-        base->priv.State = StateWillAppearExecute(base);
         printf("willappearexecute\n");
+        base->priv.State = StateWillAppearExecute(base);
         break;
 
     case PageBase::PAGE_STATE_DID_APPEAR:
@@ -62,6 +39,7 @@ void PageManager::StateUpdate(PageBase* base)
         break;
 
     case PageBase::PAGE_STATE_WILL_DISAPPEAR:
+        printf("will disappear execute\n");
         base->priv.State = StateWillDisappearExecute(base);
         break;
 
@@ -103,10 +81,9 @@ PageBase::State_t PageManager::StateLoadExecute(PageBase* base)
     lv_obj_set_user_data(root_obj, base);
 
     base->root = root_obj;
-    printf("page %s will onviewload()\n", base->Name);
-    
+    printf("page %s will onviewload()\n", base->Name);    
     base->onViewLoad();
-    printf("onviewload\n");
+
     if (GetIsOverAnim(GetCurrentLoadAnimType()))
     {
         PageBase* bottomPage = GetStackTopAfter();
@@ -147,7 +124,7 @@ PageBase::State_t PageManager::StateLoadExecute(PageBase* base)
   */
 PageBase::State_t PageManager::StateWillAppearExecute(PageBase* base)
 {
-    PM_LOG_INFO("Page(%s) state will appear", base->Name);
+    printf("Page(%s) state will appear\n", base->Name);
     base->onViewWillAppear();
     lv_obj_clear_flag(base->root, LV_OBJ_FLAG_HIDDEN);
     SwitchAnimCreate(base);

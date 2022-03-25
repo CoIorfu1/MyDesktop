@@ -7,7 +7,7 @@ extern "C" {
 
 #include "../Modules.h"
 
-void* home_button_init();
+void* home_button_init(void* ptr);
 
 #ifdef __cplusplus
 } /*extern "C"*/

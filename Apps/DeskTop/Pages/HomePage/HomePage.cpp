@@ -31,29 +31,16 @@ void HomePage::onViewDidLoad()
 
 void HomePage::onViewWillAppear()
 {
-    lv_obj_clear_flag(View.ui.BackGround, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_clear_flag(View.ui.BottomCont.cont, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_clear_flag(View.ui.TopInfo.cont, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_move_foreground(View.ui.BottomCont.cont);
-    lv_obj_move_foreground(View.ui.TopInfo.cont);
-    lv_obj_move_foreground(View.ui.AppCont.cont);
-    lv_obj_move_background(View.ui.BackGround);
-    printf("view will appear\n");
     View.AppearAnimStart();
 }
 
 void HomePage::onViewDidAppear()
 {
-    lv_obj_clear_flag(View.ui.AppCont.cont, LV_OBJ_FLAG_HIDDEN);
+    //lv_obj_clear_flag(View.ui.AppCont.cont, LV_OBJ_FLAG_HIDDEN);
 }
 
 void HomePage::onViewWillDisappear()
 {
-    lv_obj_add_flag(View.ui.BottomCont.cont, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(View.ui.AppCont.cont, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(View.ui.TopInfo.cont, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(View.ui.BackGround, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_fade_out(root, 250, 250);
     //View.AppearAnimStart(true);
 }
 
@@ -74,11 +61,20 @@ void HomePage::AttachEvent(lv_obj_t* obj)
 void HomePage::onAppClicked(lv_obj_t* btn)
 {
     printf("Clicked\n");
+    bool isRepeat = false;
     if (btn == View.ui.BottomCont.brightnessIcon)
     {
-        dbus_method_call("net.my.lvgl.Brightness", "/net/my/lvgl/Brightness", "net.my.lvgl.Brightness", "states", 0, 0);
-
+        Manager->Push("Pages/Brightness");
+        //dbus_method_call("net.my.lvgl.Brightness", "/net/my/lvgl/Brightness", "net.my.lvgl.Brightness", "states", 0, 0);
+        lv_timer_t* timer = lv_timer_create(onTimer, 500, NULL);
+        lv_timer_set_repeat_count(timer, 1);
     }
+}
+
+void HomePage::onTimer(lv_timer_t* timer)
+{
+    dbus_method_call("net.my.lvgl.Brightness", "/net/my/lvgl/Brightness", "net.my.lvgl.Brightness", "states", 0, 0);
+    
 }
 
 void HomePage::onEvent(lv_event_t* event)

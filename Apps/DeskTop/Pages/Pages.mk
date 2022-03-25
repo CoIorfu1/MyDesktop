@@ -1,4 +1,5 @@
 include $(PAGES_DIR)/HomePage/HomePage.mk
+include $(PAGES_DIR)/Brightness/Brightness.mk
 
 CXXSRCS += AppFactory.cpp
 

@@ -1,13 +1,15 @@
 #include <unistd.h>
 #include <time.h>
 #include <sys/time.h>
+#include <stdio.h>
+#include <pthread.h>
 #include <dbus/dbus.h>
 #include "../Utils/lvgl/lvgl.h"
 #include "../Utils/lv_drivers/display/fbdev.h"
 #include "../Utils/lv_drivers/indev/evdev.h"
 #include "../Utils/lv_lib_png/lv_png.h"
 #include "../../Modules/Modules.h"
-#include "APP.h"
+#include "App.h"
 
 #define DISP_BUF_SIZE (1024 * 600)
 
@@ -68,7 +70,8 @@ int main(void){
         else
         {
             wait_for_app_foreground();
-            BackHomePage();
+            Pop();
+            printf("backhome\n");
         }
     }
     return 0;

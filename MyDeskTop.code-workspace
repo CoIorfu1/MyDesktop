@@ -16,7 +16,11 @@
 			"lv_drv_conf.h": "c",
 			"array": "cpp",
 			"string": "cpp",
-			"string_view": "cpp"
+			"string_view": "cpp",
+			"typeinfo": "cpp",
+			"modules_conf.h": "c",
+			"home_button.h": "c",
+			"app.h": "c"
 		}
 	}
 }

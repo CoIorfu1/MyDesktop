@@ -29,11 +29,16 @@ void wait_for_app_foreground(){
 }
 
 void change_app_state(int state){
-    printf("change_app_state\n");
-    if(state == 0)
+    if(state == 0){
+        printf("change_app_state %d\n", state);
         sleep_lvgl_thread();
-    else if(state == 1)
+    }
+        
+    else if(state == 1){
         wakeup_lvgl_thread();
+        printf("change_app_state %d\n", state);
+    }
+        
 }
 
 int is_app_foreground(){

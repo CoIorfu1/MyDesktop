@@ -1,3 +1,4 @@
+#include "App.h"
 #include "Pages/AppFactory.h"
 #include "../Utils/PageManager/PageManager.h"
 #include "../Utils/lv_lib_png/lv_png.h"
@@ -13,6 +14,7 @@ void App_Init()
     lv_disp_set_bg_color(lv_disp_get_default(), lv_color_black());
 
     manager.Install("HomePage","Pages/HomePage");
+    manager.Install("Brightness", "Pages/Brightness");
 
     manager.SetGlobalLoadAnimType(PageManager::LOAD_ANIM_OVER_TOP, 500);
 
@@ -21,6 +23,14 @@ void App_Init()
 
 void BackHomePage(){
     manager.BackHome();
+}
+
+void* Pop(void* ptr){
+    manager.Pop();
+}
+
+void Pop(){
+    manager.Pop();
 }
 
 void App_Uninit()

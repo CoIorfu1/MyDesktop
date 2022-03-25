@@ -12,7 +12,7 @@ BIN = MyDeskTop
 
 #Collect the files to compile
 MAINSRC = ./main.cpp
-CXXSRCS ?= ./APP.cpp
+CXXSRCS ?= ./App.cpp
 
 include $(LVGL_DIR)/Utils.mk
 include $(MODULES_DIR)/Modules.mk
