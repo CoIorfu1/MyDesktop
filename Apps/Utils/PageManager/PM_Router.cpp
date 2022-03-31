@@ -113,7 +113,6 @@ void PageManager::SwitchTo(PageBase* newNode, bool isPushAct, const PageBase::St
         printf("Page switch busy, reqire(%s) is ignore", newNode->Name);
         return;
     }
-    printf("switch start\n");
 
     AnimState.IsSwitchReq = true;
 
@@ -166,7 +165,6 @@ void PageManager::SwitchTo(PageBase* newNode, bool isPushAct, const PageBase::St
         /* Load page */
         PageCurrent->priv.State = PageBase::PAGE_STATE_LOAD;
     }
-    printf("state %d\n", PageCurrent->priv.State);
 
     if (PagePrev != nullptr)
     {
@@ -184,9 +182,7 @@ void PageManager::SwitchTo(PageBase* newNode, bool isPushAct, const PageBase::St
     }
 
     /* Update the state machine of the previous page */
-    if(PagePrev) printf("Pageprev %s\n", PagePrev ->Name);
     StateUpdate(PagePrev);
-    printf("stateupdate pagecurrent %s\n", PageCurrent->Name);
     /* Update the state machine of the current page */
     StateUpdate(PageCurrent);
 
@@ -196,19 +192,15 @@ void PageManager::SwitchTo(PageBase* newNode, bool isPushAct, const PageBase::St
         PM_LOG_INFO("Page PUSH is detect, move Page(%s) to foreground", PageCurrent->Name);
         if (PagePrev){
             lv_obj_move_foreground(PagePrev->root);
-            printf("move Pageprev(%s) to foreground\n", PagePrev->Name);
         }
         lv_obj_move_foreground(PageCurrent->root);
-        printf("move Pagecurrent(%s) to foreground\n", PageCurrent->Name);
     }
     else
     {
         PM_LOG_INFO("Page POP is detect, move Page(%s) to foreground", GetPagePrevName());
         lv_obj_move_foreground(PageCurrent->root);
-        printf("move Pagecurrent(%s) to foreground\n", PageCurrent->Name);
         if (PagePrev){
             lv_obj_move_foreground(PagePrev->root);
-            printf("move Pageprev(%s) to foreground\n", PagePrev->Name);
         }
     }
 }
@@ -330,7 +322,6 @@ void PageManager::onSwitchAnimFinish(lv_anim_t* a)
     PageManager* manager = base->Manager;
 
     PM_LOG_INFO("Page(%s) Anim finish", base->Name);
-    printf("Page(%s) Anim finish\n", base->Name);
     manager->StateUpdate(base);
     base->priv.Anim.IsBusy = false;
     bool isFinished = manager->SwitchReqCheck();
@@ -372,7 +363,6 @@ void PageManager::SwitchAnimCreate(PageBase* base)
     {
         if (base->priv.Anim.IsEnter)
         {
-            printf("page %s push enter\n", base->Name);
             lv_anim_set_values(
                 &a,
                 animAttr.push.enter.start,
@@ -381,7 +371,6 @@ void PageManager::SwitchAnimCreate(PageBase* base)
         }
         else /* Exit */
         {
-            printf("page %s push exit\n", base->Name);
             lv_anim_set_values(
                 &a,
                 start,
@@ -393,7 +382,6 @@ void PageManager::SwitchAnimCreate(PageBase* base)
     {
         if (base->priv.Anim.IsEnter)
         {
-            printf("page %s pop enter\n", base->Name);
             lv_anim_set_values(
                 &a,
                 animAttr.pop.enter.start,
@@ -402,7 +390,6 @@ void PageManager::SwitchAnimCreate(PageBase* base)
         }
         else /* Exit */
         {
-            printf("page %s  pop exit\n", base->Name);
             lv_anim_set_values(
                 &a,
                 start,
@@ -410,7 +397,6 @@ void PageManager::SwitchAnimCreate(PageBase* base)
             );
         }
     }
-    printf("anim %s start\n", base->Name);
     lv_anim_start(&a);
     base->priv.Anim.IsBusy = true;
 }

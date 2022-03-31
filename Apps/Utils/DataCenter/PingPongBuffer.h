@@ -8,7 +8,9 @@ class Buffer{
     public:
     Buffer(uint32_t bufSize);
     ~Buffer();
+    // write data_p to WBuf
     void WriteBuffer(const void* data_p, uint32_t size);
+    //read RBuf to des_p
     void ReadBuffer(void* des_p, uint32_t size);
     private:
     uint32_t BufferSize;

@@ -105,7 +105,6 @@ PageBase* PageManager::Install(const char* className, const char* appName)
 
     PM_LOG_INFO("Install Page[class = %s, name = %s]", className, appName);
     Register(base, appName);
-    printf("installed\n");
     return base;
 }
 

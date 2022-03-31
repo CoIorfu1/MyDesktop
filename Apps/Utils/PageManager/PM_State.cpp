@@ -18,12 +18,10 @@ void PageManager::StateUpdate(PageBase* base)
 
     case PageBase::PAGE_STATE_LOAD:
         base->priv.State = StateLoadExecute(base);
-        printf("loadexecute\n");
         StateUpdate(base);
         break;
 
     case PageBase::PAGE_STATE_WILL_APPEAR:
-        printf("willappearexecute\n");
         base->priv.State = StateWillAppearExecute(base);
         break;
 
@@ -39,7 +37,6 @@ void PageManager::StateUpdate(PageBase* base)
         break;
 
     case PageBase::PAGE_STATE_WILL_DISAPPEAR:
-        printf("will disappear execute\n");
         base->priv.State = StateWillDisappearExecute(base);
         break;
 
@@ -80,26 +77,8 @@ PageBase::State_t PageManager::StateLoadExecute(PageBase* base)
     lv_obj_clear_flag(root_obj, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_set_user_data(root_obj, base);
 
-    base->root = root_obj;
-    printf("page %s will onviewload()\n", base->Name);    
+    base->root = root_obj;    
     base->onViewLoad();
-
-    if (GetIsOverAnim(GetCurrentLoadAnimType()))
-    {
-        PageBase* bottomPage = GetStackTopAfter();
-
-        if (bottomPage != nullptr && bottomPage->priv.IsCached)
-        {
-            LoadAnimAttr_t animAttr;
-            if (GetCurrentLoadAnimAttr(&animAttr))
-            {
-                if (animAttr.dragDir != ROOT_DRAG_DIR_NONE)
-                {
-                    RootEnableDrag(base->root);
-                }
-            }
-        }
-    }
 
     base->onViewDidLoad();
 
@@ -124,11 +103,9 @@ PageBase::State_t PageManager::StateLoadExecute(PageBase* base)
   */
 PageBase::State_t PageManager::StateWillAppearExecute(PageBase* base)
 {
-    printf("Page(%s) state will appear\n", base->Name);
     base->onViewWillAppear();
     lv_obj_clear_flag(base->root, LV_OBJ_FLAG_HIDDEN);
     SwitchAnimCreate(base);
-    printf("Page(%s) state did appear\n", base->Name);
     return PageBase::PAGE_STATE_DID_APPEAR;
 }
 
@@ -154,7 +131,6 @@ PageBase::State_t PageManager::StateWillDisappearExecute(PageBase* base)
     PM_LOG_INFO("Page(%s) state will disappear", base->Name);
     base->onViewWillDisappear();
     SwitchAnimCreate(base);
-    printf("Page(%s) state did disappear\n", base->Name);
     return PageBase::PAGE_STATE_DID_DISAPPEAR;
 }
 

@@ -1,6 +1,5 @@
 CXXSRCS += PM_Anim.cpp
 CXXSRCS += PM_Base.cpp
-CXXSRCS += PM_Drag.cpp
 CXXSRCS += PM_Router.cpp
 CXXSRCS += PM_State.cpp
 

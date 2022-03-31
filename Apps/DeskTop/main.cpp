@@ -64,14 +64,12 @@ int main(void){
         if (1 == is_app_foreground())
         {
             lv_task_handler();
-            //lv_tick_inc(5*1000);
             usleep(5000);
         }
         else
         {
             wait_for_app_foreground();
             Pop();
-            printf("backhome\n");
         }
     }
     return 0;

@@ -19,9 +19,7 @@ void HomePage::onCustomAttrConfig()
 void HomePage::onViewLoad()
 {
     View.Create(root);
-    printf("view creat\n");
     AttachEvent(View.ui.BottomCont.brightnessIcon);
-    printf("attch event\n");
 }
 
 void HomePage::onViewDidLoad()
@@ -60,12 +58,10 @@ void HomePage::AttachEvent(lv_obj_t* obj)
 
 void HomePage::onAppClicked(lv_obj_t* btn)
 {
-    printf("Clicked\n");
     bool isRepeat = false;
     if (btn == View.ui.BottomCont.brightnessIcon)
     {
         Manager->Push("Pages/Brightness");
-        //dbus_method_call("net.my.lvgl.Brightness", "/net/my/lvgl/Brightness", "net.my.lvgl.Brightness", "states", 0, 0);
         lv_timer_t* timer = lv_timer_create(onTimer, 500, NULL);
         lv_timer_set_repeat_count(timer, 1);
     }

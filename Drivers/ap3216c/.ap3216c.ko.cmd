@@ -1,0 +1,1 @@
+cmd_/home/book/MyDeskTop/Drivers/ap3216c/ap3216c.ko := arm-buildroot-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/book/MyDeskTop/Drivers/ap3216c/ap3216c.ko /home/book/MyDeskTop/Drivers/ap3216c/ap3216c.o /home/book/MyDeskTop/Drivers/ap3216c/ap3216c.mod.o ;  true

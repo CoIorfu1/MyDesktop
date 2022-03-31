@@ -2,6 +2,7 @@
 #define _ACCOUNT_H_
 
 #include <vector>
+#include "../lvgl/lvgl.h"
 #include "PingPongBuffer.h"
 
 class DataCenter;
@@ -34,6 +35,7 @@ class Account{
         Account* tran;
         Account* recv;
         std::shared_ptr<Buffer> data_p;
+        // destination where pull data to 
         void* pull_p;
         uint32_t size;
     }EventParam_t;
@@ -55,6 +57,8 @@ class Account{
     int Notify(const char* pubID, const void* data_p, uint32_t size);
     int Notify(Account* pub, const void* data_p, uint32_t size);
     void SetEventCallback(EventCallback_t callback);
+    void SetTimerPeriod(uint32_t period);
+    void SetTimerEnable(bool en);
     size_t GetPublishersSize();
     size_t GetSubscribersSize();
 
@@ -69,9 +73,13 @@ class Account{
 
     struct {
         EventCallback_t EventCallback;
+        lv_timer_t* timer;
         PingPongBuffer_t BufferManager;
         uint32_t BufferSize;
     }priv;
+
+    private:
+    static void TimerCallbackHandler(lv_timer_t* task);
 };
 
 #endif // _ACCOUNT_H_

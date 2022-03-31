@@ -21,6 +21,12 @@ Account::Account(const char* id, DataCenter* center, uint32_t bufSize, void* use
 }
 
 Account::~Account(){
+    /* Delete timer */
+    if (priv.timer)
+    {
+        lv_timer_del(priv.timer);
+    }
+
     //* Account (subscribes to this) to unsubscribe
     for(auto& iter : Subscribers){
         iter->Unsubscribe(ID);
@@ -84,11 +90,13 @@ int Account::Publish(){
     param.recv = nullptr;
     //* priv.BufferManager.buffers_[read].use_count() = 2
     param.data_p = PingPongBuffer_GetReadBuf(&priv.BufferManager);
+    param.pull_p = nullptr;
     param.size = priv.BufferSize;
 
     for(auto& iter : Subscribers){
         EventCallback_t callback = iter->priv.EventCallback;
         if(callback != nullptr){
+            param.recv = iter;
             ret = callback(iter, &param);
             //* param->data_p->ReadBuffer(des_p, param.size);
             printf("publish to %s done\n", iter->ID);
@@ -109,7 +117,7 @@ int Account::Pull(const char* pubID, void* data_p, uint32_t size){
     return Pull(pub, data_p, size);
 }
 
-int Account::Pull(Account* pub, void* pull_p, uint32_t size){
+int Account::Pull(Account* pub, void* des_p, uint32_t size){
     int ret = RES_OK;
     EventCallback_t callback = pub->priv.EventCallback;
     if(callback != nullptr){
@@ -118,7 +126,7 @@ int Account::Pull(Account* pub, void* pull_p, uint32_t size){
         param.tran = this;
         param.recv = pub;
         param.data_p = PingPongBuffer_GetReadBuf(&pub->priv.BufferManager);
-        param.pull_p = pull_p;
+        param.pull_p = des_p;
         param.size = size;
         ret = callback(pub, &param);
         //* param->data_p->ReadBuffer(param->pull_p, size);
@@ -126,7 +134,7 @@ int Account::Pull(Account* pub, void* pull_p, uint32_t size){
     else{
         //* read commit cache
         std::shared_ptr<Buffer> rBuf = PingPongBuffer_GetReadBuf(&pub->priv.BufferManager);
-        rBuf->ReadBuffer(pull_p, size);
+        rBuf->ReadBuffer(des_p, size);
         printf("read commit cache\n");
     }
     return ret;
@@ -149,10 +157,11 @@ int Account::Notify(Account* pub, const void* data_p, uint32_t size){
         param.event = EVENT_SUB_NOTIFY;
         param.tran = this;
         param.recv = pub;
+        param.data_p = nullptr;
         param.pull_p = (void*)data_p;
         param.size = size;
         ret = callback(pub, &param);
-        //* memcpy(des_p, param->pull_p, param->size);
+        //* memcpy(pub.des_p, param->pull_p, param->size);
     }
     else{
         printf("pub no register callback\n");
@@ -171,5 +180,54 @@ size_t Account::GetPublishersSize(){
 
 size_t Account::GetSubscribersSize(){
     return Subscribers.size();
+}
+
+void Account::TimerCallbackHandler(lv_timer_t* timer)
+{
+    Account* instance = (Account*)(timer->user_data);
+    EventCallback_t callback = instance->priv.EventCallback;
+    if(callback)
+    {
+        EventParam_t param;
+        param.event = EVENT_TIMER;
+        param.tran = instance;
+        param.recv = instance;
+        param.data_p = nullptr;
+        param.pull_p = nullptr;
+        param.size = 0;
+        callback(instance, &param);
+    }
+}
+
+void Account::SetTimerPeriod(uint32_t period)
+{
+    if(priv.timer)
+    {
+        lv_timer_del(priv.timer);
+        priv.timer = nullptr;
+    }
+
+    if(period == 0)
+    {
+        return;
+    }
+
+    priv.timer = lv_timer_create(
+                     TimerCallbackHandler,
+                     period,
+                     this
+                 );
+}
+
+void Account::SetTimerEnable(bool en)
+{
+    lv_timer_t* timer = priv.timer;
+
+    if (timer == nullptr)
+    {
+        return;
+    }
+
+    en ? lv_timer_resume(timer) : lv_timer_pause(timer);
 }
 

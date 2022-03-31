@@ -260,6 +260,11 @@
     pinctrl-names = "default";
     pinctrl-0 = <&pinctrl_i2c1>;
     status = "okay";
+
+    ap3216c@1e{
+        compatible = "ap3216c";
+        reg = <0x1e>;
+    };
 };
 
 &i2c2 {
@@ -802,6 +807,11 @@
     cs-gpios = <&gpio1 20 GPIO_ACTIVE_LOW>;
     status = "okay";
     
+    icm20608{
+        compatible = "icm20608";
+        reg = <0>;
+        spi-max-frequency = <8000000>;
+    };
     
     spidev: icm20608@0{
         compatible = "invensense,icm20608";

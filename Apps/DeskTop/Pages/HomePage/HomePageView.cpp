@@ -60,7 +60,6 @@ void HomePageView::Delete()
 
 void HomePageView::BottomCont_Create(lv_obj_t* par)
  {
-    printf("test\n");
     lv_obj_t* cont = lv_obj_create(par);
 
     lv_style_init(&ui.bottomContStyle);
@@ -193,5 +192,4 @@ void HomePageView::AppearAnimStart(bool reverse)
 {
     lv_anim_timeline_set_reverse(ui.anim_timeline, reverse);
     lv_anim_timeline_start(ui.anim_timeline);
-    printf("anim time line start\n");
 }

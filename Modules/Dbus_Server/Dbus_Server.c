@@ -38,8 +38,6 @@ static void *dbus_dispatch_thread_func(void *pvoid){
 static DBusHandlerResult handle_message(DBusConnection *connection, DBusMessage *message, void *user_data){
     const char *interface_name = dbus_message_get_interface(message);
     const char *member_name = dbus_message_get_member(message);
-    printf("interface:%s\n", interface_name);
-    printf("member_name:%s\n", member_name);
     
     if (0==strcmp("org.freedesktop.DBus.Introspectable", interface_name) &&
         0==strcmp("Introspect", member_name)) {
@@ -129,9 +127,6 @@ void dbus_server_init(const char *path, const char *iface){
  
     my_object_path = path;       
     my_iface = iface;    
-
-    printf("object_path: %s, object_interface: %s\n", my_object_path, my_iface);
-
     dbus_error_init(&error);
     myconnection = dbus_bus_get(DBUS_BUS_SESSION, &error);  //* 连接到DBus总线
     check_and_abort(&error);
@@ -158,7 +153,7 @@ void dbus_method_call(const char *destination, const char *path, const char *ifa
     DBusConnection *connection;
     DBusError error;
     DBusMessage *message;
-    printf("dbus method call\n");
+
     dbus_error_init(&error);
     connection = dbus_bus_get(DBUS_BUS_SESSION, &error);
 
@@ -175,7 +170,6 @@ void dbus_method_call(const char *destination, const char *path, const char *ifa
         printf("[error] Message NULL!!!");
         return;
     }
-    printf("iface=%s\n",iface);
     /* Append the argument to the message */
     dbus_message_append_args(message, DBUS_TYPE_INT32, &state, DBUS_TYPE_INT32, &pid, DBUS_TYPE_INVALID);
 
@@ -187,7 +181,6 @@ void dbus_method_call(const char *destination, const char *path, const char *ifa
 
     dbus_message_unref(message);
     dbus_connection_unref(connection);
-    printf("message send\n");
 }
 
 #endif

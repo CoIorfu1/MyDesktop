@@ -30,13 +30,11 @@ void wait_for_app_foreground(){
 
 void change_app_state(int state){
     if(state == 0){
-        printf("change_app_state %d\n", state);
         sleep_lvgl_thread();
     }
         
     else if(state == 1){
         wakeup_lvgl_thread();
-        printf("change_app_state %d\n", state);
     }
         
 }

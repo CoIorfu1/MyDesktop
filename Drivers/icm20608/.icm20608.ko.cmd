@@ -1,0 +1,1 @@
+cmd_/home/book/MyDeskTop/Drivers/icm20608/icm20608.ko := arm-buildroot-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/book/MyDeskTop/Drivers/icm20608/icm20608.ko /home/book/MyDeskTop/Drivers/icm20608/icm20608.o /home/book/MyDeskTop/Drivers/icm20608/icm20608.mod.o ;  true
