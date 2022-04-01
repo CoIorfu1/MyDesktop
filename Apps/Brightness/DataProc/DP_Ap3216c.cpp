@@ -1,6 +1,6 @@
 #include "DataProc.h"
 
-#define CONFIG_AP3216C_REFR_PERIOD              300 // ms
+#define CONFIG_AP3216C_REFR_PERIOD              250 // ms
 
 
 static void onTimer(Account* account)

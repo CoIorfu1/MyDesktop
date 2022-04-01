@@ -2,6 +2,7 @@
 #define __HAL_H
 
 #include <stdint.h>
+#include <atomic>
 
 namespace HAL {
     

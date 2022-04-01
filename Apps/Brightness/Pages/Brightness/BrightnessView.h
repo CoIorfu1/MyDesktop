@@ -8,17 +8,18 @@ namespace Page
 
 class BrightnessView
 {
-
 public:
+    typedef struct
+    {
+        lv_obj_t* cont;
+        lv_obj_t* lableValue;
+        lv_obj_t* lableUnit;
+    } SubInfo_t;
 
 public:
     struct
     {  
         lv_style_t topInfoContStyle;
-        lv_style_t styleMain;
-        lv_style_t styleIndicator;
-        lv_style_t styleKnob;
-        lv_style_t stylePressedColor;
 
         struct
         {
@@ -31,7 +32,11 @@ public:
             lv_timer_t * timer;
         }TopInfo;
 
-        lv_obj_t* Slider;
+        struct
+        {
+            lv_obj_t* cont;
+            SubInfo_t labelInfoGrp[3];
+        }ap3216cInfo;
 
         lv_anim_timeline_t* anim_timeline;
     } ui;
@@ -42,8 +47,8 @@ public:
 
 private:
     void TopInfo_Create(lv_obj_t* par);
-    void Slider_Creat(lv_obj_t* par);
-    void Label_Create(lv_obj_t* par, const char* labelname, lv_obj_t* base);
+    void Ap3216cInfo_Create(lv_obj_t* par);
+    void SubInfoGrp_Create(lv_obj_t* par, SubInfo_t* info, const char* unitText);
 };
 
 }

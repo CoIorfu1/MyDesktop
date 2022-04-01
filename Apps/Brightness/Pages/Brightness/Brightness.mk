@@ -1,4 +1,5 @@
 CXXSRCS += BrightnessView.cpp
+CXXSRCS += BrightnessModel.cpp
 CXXSRCS += Brightness.cpp
 
 DEPPATH += --dep-path $(PAGES_DIR)/Brightness

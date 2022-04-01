@@ -2,6 +2,7 @@
 #define __BRIGHTNESS_H
 
 #include "BrightnessView.h"
+#include "BrightnessModel.h"
 #include "../../Modules/Modules.h"
 
 namespace Page
@@ -23,10 +24,14 @@ public:
     virtual void onViewDidUnload();
 private:
     void AttachEvent(lv_obj_t* obj);
+    void Update();
+    static void onTimerUpdate(lv_timer_t* timer);
     static void onEvent(lv_event_t* event);
 
 private:
     BrightnessView View;
+    BrightnessModel Model;
+    lv_timer_t* timer;
 };
 
 }

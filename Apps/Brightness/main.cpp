@@ -10,6 +10,7 @@
 #include "../Utils/lv_lib_png/lv_png.h"
 #include "../../Modules/Modules.h"
 #include "./App.h"
+#include "./DataProc/DataProc.h"
 
 #define DISP_BUF_SIZE (1024 * 600)
 
@@ -17,6 +18,8 @@ int main(void){
     const char* path = "/net/my/lvgl/Brightness";
     const char* interface =  "net.my.lvgl.Brightness";
     pthread_t app_exit_thread;
+
+    HAL::HAL_Init();
     /*LittlevGL init*/
     lv_init();
 
@@ -59,7 +62,6 @@ int main(void){
     // 建立APP DBUS服务器
     dbus_server_init(path, interface);
     dbus_method_call("net.my.lvgl.Main", "/net/my/lvgl/Main", "net.my.lvgl.Main", "states", 0, 0);
-    printf("net.my.lvgl.Main 0\n");
 
     App_Init();
     pthread_create(&app_exit_thread, NULL, home_button_init, NULL);
