@@ -93,7 +93,7 @@ void BrightnessView::SubInfoGrp_Create(lv_obj_t* par, SubInfo_t* info, const cha
     lv_obj_set_style_text_align(label, LV_TEXT_ALIGN_CENTER, 0);
     lv_obj_set_style_text_color(label, lv_color_hex(0x0), 0);
     lv_obj_set_width(label, 200);
-    lv_label_set_text(label, "0");
+    lv_label_set_text(label, "waiting");
     info->lableValue = label;
 
     info->cont = cont;

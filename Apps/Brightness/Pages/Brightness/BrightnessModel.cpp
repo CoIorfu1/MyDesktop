@@ -4,10 +4,6 @@ using namespace Page;
 
 void BrightnessModel::Init()
 {
-    std::atomic_init(&irReadFlag, false);
-    std::atomic_init(&alsReadFlag, false);
-    std::atomic_init(&psReadFlag, false);
-
     account = new Account("BrightnessModel", DataProc::Center(), 0, this);
     account->Subscribe("Ap3216c");
     account->SetEventCallback(onEvent);
@@ -37,10 +33,11 @@ int BrightnessModel::onEvent(Account* account, Account::EventParam_t* param)
     }
 
     BrightnessModel* instance = (BrightnessModel*)account->UserData;
-    param->data_p->ReadBuffer(&instance->ap3216cInfo, sizeof(HAL::Ap3216c_Info_t));
-    instance->irReadFlag = true;
-    instance->alsReadFlag = true;
-    instance->psReadFlag = true;
-    printf("read %d, %d, %d", instance->ap3216cInfo.IR, instance->ap3216cInfo.ALS, instance->ap3216cInfo.PS);
+    if(instance->mtx.try_lock()){
+        param->data_p->ReadBuffer(&instance->ap3216cInfo, sizeof(HAL::Ap3216c_Info_t));
+        printf("read %d, %d, %d", instance->ap3216cInfo.IR, instance->ap3216cInfo.ALS, instance->ap3216cInfo.PS);
+        instance->mtx.unlock();
+    }
+    
     return 0;
 }

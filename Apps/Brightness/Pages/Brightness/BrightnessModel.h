@@ -2,6 +2,7 @@
 #define __BRIGHTNESS_MODEL_H
 
 #include <atomic>
+#include <mutex>
 #include <limits.h>
 #include "../../DataProc/DataProc.h"
 
@@ -13,6 +14,7 @@ class BrightnessModel
 
 public:
     HAL::Ap3216c_Info_t ap3216cInfo;
+    std::mutex mtx;
 
 public:
     void Init();
@@ -20,36 +22,21 @@ public:
 
     unsigned short GetIR()
     {
-        if(irReadFlag) {
-            irReadFlag = false;
-            return ap3216cInfo.IR;
-        }
-        return USHRT_MAX;
+        return ap3216cInfo.IR;
     }
 
     unsigned short GetALS()
     {     
-        if(alsReadFlag) {
-            alsReadFlag = false;
-            return ap3216cInfo.ALS;
-        }
-        return USHRT_MAX;
+        return ap3216cInfo.ALS;
     }
 
     unsigned short GetPS()
     {
-        if(psReadFlag) {
-            psReadFlag = false;
-            return ap3216cInfo.PS;
-        }
-        return USHRT_MAX;
+        return ap3216cInfo.PS;
     }
 
 private:
     Account* account;
-    std::atomic_bool irReadFlag;
-    std::atomic_bool alsReadFlag;
-    std::atomic_bool psReadFlag;
 
 private:
     static int onEvent(Account* account, Account::EventParam_t* param);

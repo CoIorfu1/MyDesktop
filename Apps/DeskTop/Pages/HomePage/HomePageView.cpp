@@ -40,7 +40,7 @@ void HomePageView::Create(lv_obj_t* root)
     lv_coord_t y_tar_bottom = lv_obj_get_y(ui.BottomCont.cont);
     lv_anim_timeline_wrapper_t wrapper[] =
     {
-        ANIM_DEF(100, ui.BottomCont.cont, y, LV_VER_RES + lv_obj_get_height(ui.BottomCont.cont), y_tar_bottom),
+        ANIM_DEF(200, ui.BottomCont.cont, y, LV_VER_RES + lv_obj_get_height(ui.BottomCont.cont), y_tar_bottom),
         LV_ANIM_TIMELINE_WRAPPER_END
     };
     lv_anim_timeline_add_wrapper(ui.anim_timeline, wrapper);

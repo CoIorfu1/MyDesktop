@@ -13,7 +13,7 @@ HomePage::~HomePage()
 
 void HomePage::onCustomAttrConfig()
 {
-    SetCustomLoadAnimType(PageManager::LOAD_ANIM_NONE);
+    SetCustomLoadAnimType(PageManager::LOAD_ANIM_NONE, 300);
 }
 
 void HomePage::onViewLoad()
@@ -62,14 +62,14 @@ void HomePage::onAppClicked(lv_obj_t* btn)
     if (btn == View.ui.BottomCont.brightnessIcon)
     {
         Manager->Push("Pages/Brightness");
-        lv_timer_t* timer = lv_timer_create(onTimer, 500, NULL);
+        lv_timer_t* timer = lv_timer_create(onTimer, 300, NULL);
         lv_timer_set_repeat_count(timer, 1);
     }
 }
 
 void HomePage::onTimer(lv_timer_t* timer)
 {
-    dbus_method_call("net.my.lvgl.Brightness", "/net/my/lvgl/Brightness", "net.my.lvgl.Brightness", "states", 0, 0);
+    dbus_method_call("net.my.lvgl.Brightness", "/net/my/lvgl/Brightness", "net.my.lvgl.Brightness", "states", 1, 0);
     
 }
 

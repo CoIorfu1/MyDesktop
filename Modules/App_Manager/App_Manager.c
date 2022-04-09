@@ -8,6 +8,7 @@
 #include <pthread.h>
 
 static int lv_state = 1;
+static pthread_mutex_t state_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t lv_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static void sleep_lvgl_thread();
@@ -29,6 +30,7 @@ void wait_for_app_foreground(){
 }
 
 void change_app_state(int state){
+    pthread_mutex_lock(&state_mutex);
     if(state == 0){
         sleep_lvgl_thread();
     }
@@ -36,11 +38,14 @@ void change_app_state(int state){
     else if(state == 1){
         wakeup_lvgl_thread();
     }
-        
+    pthread_mutex_unlock(&state_mutex); 
 }
 
 int is_app_foreground(){
-    return lv_state;
+    pthread_mutex_lock(&state_mutex);
+    int tmp = lv_state;
+    pthread_mutex_unlock(&state_mutex);
+    return tmp;
 }
 
 #endif

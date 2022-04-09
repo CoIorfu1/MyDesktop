@@ -59,7 +59,9 @@
 			"stdexcept": "cpp",
 			"streambuf": "cpp",
 			"thread": "cpp",
-			"cinttypes": "cpp"
+			"cinttypes": "cpp",
+			"pthread.h": "c",
+			"stdatomic.h": "c"
 		}
 	}
 }
