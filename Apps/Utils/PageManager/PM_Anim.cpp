@@ -1,12 +1,6 @@
 #include "PageManager.h"
 #include "PM_Log.h"
 
-/**
-  * @brief  Get page loading animation properties
-  * @param  anim: Animation type
-  * @param  attr: Pointer to attribute
-  * @retval Whether the acquisition is successful
-  */
 bool PageManager::GetLoadAnimAttr(uint8_t anim, LoadAnimAttr_t* attr)
 {
     lv_coord_t hor = LV_HOR_RES;

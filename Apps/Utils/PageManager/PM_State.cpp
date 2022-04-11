@@ -1,11 +1,6 @@
 #include "PageManager.h"
 #include "PM_Log.h"
 
-/**
-  * @brief  Update page state machine
-  * @param  base: Pointer to the updated page
-  * @retval None
-  */
 void PageManager::StateUpdate(PageBase* base)
 {
     if (base == nullptr)
@@ -58,11 +53,6 @@ void PageManager::StateUpdate(PageBase* base)
     }
 }
 
-/**
-  * @brief  Page loading status
-  * @param  base: Pointer to the updated page
-  * @retval Next state
-  */
 PageBase::State_t PageManager::StateLoadExecute(PageBase* base)
 {
     PM_LOG_INFO("Page(%s) state load", base->Name);
@@ -96,11 +86,6 @@ PageBase::State_t PageManager::StateLoadExecute(PageBase* base)
     return PageBase::PAGE_STATE_WILL_APPEAR;
 }
 
-/**
-  * @brief  The page is about to show the status
-  * @param  base: Pointer to the updated page
-  * @retval Next state
-  */
 PageBase::State_t PageManager::StateWillAppearExecute(PageBase* base)
 {
     base->onViewWillAppear();
@@ -109,11 +94,6 @@ PageBase::State_t PageManager::StateWillAppearExecute(PageBase* base)
     return PageBase::PAGE_STATE_DID_APPEAR;
 }
 
-/**
-  * @brief  The status of the page display
-  * @param  base: Pointer to the updated page
-  * @retval Next state
-  */
 PageBase::State_t PageManager::StateDidAppearExecute(PageBase* base)
 {
     PM_LOG_INFO("Page(%s) state did appear", base->Name);
@@ -121,11 +101,6 @@ PageBase::State_t PageManager::StateDidAppearExecute(PageBase* base)
     return PageBase::PAGE_STATE_ACTIVITY;
 }
 
-/**
-  * @brief  The page is about to disappear
-  * @param  base: Pointer to the updated page
-  * @retval Next state
-  */
 PageBase::State_t PageManager::StateWillDisappearExecute(PageBase* base)
 {
     PM_LOG_INFO("Page(%s) state will disappear", base->Name);
@@ -134,11 +109,6 @@ PageBase::State_t PageManager::StateWillDisappearExecute(PageBase* base)
     return PageBase::PAGE_STATE_DID_DISAPPEAR;
 }
 
-/**
-  * @brief  Page disappeared end state
-  * @param  base: Pointer to the updated page
-  * @retval Next state
-  */
 PageBase::State_t PageManager::StateDidDisappearExecute(PageBase* base)
 {
     PM_LOG_INFO("Page(%s) state did disappear", base->Name);
@@ -159,11 +129,6 @@ PageBase::State_t PageManager::StateDidDisappearExecute(PageBase* base)
     }
 }
 
-/**
-  * @brief  Page unload complete
-  * @param  base: Pointer to the updated page
-  * @retval Next state
-  */
 PageBase::State_t PageManager::StateUnloadExecute(PageBase* base)
 {
     PM_LOG_INFO("Page(%s) state unload", base->Name);

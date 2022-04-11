@@ -1,12 +1,6 @@
 #include "PageManager.h"
 #include "PM_Log.h"
 
-/**
-  * @brief  Enter a new page, the old page is pushed onto the stack
-  * @param  name: The name of the page to enter 
-  * @param  stash: Parameters passed to the new page
-  * @retval Pointer to the page pushed onto the stack 
-  */
 PageBase* PageManager::Push(const char* name, const PageBase::Stash_t* stash)
 {
     /* Check whether the animation of switching pages is being executed */
@@ -45,11 +39,6 @@ PageBase* PageManager::Push(const char* name, const PageBase::Stash_t* stash)
     return base;
 }
 
-/**
-  * @brief  Pop the current page
-  * @param  None
-  * @retval Pointer to the next page 
-  */
 PageBase* PageManager::Pop()
 {
     /* Check whether the animation of switching pages is being executed */
@@ -92,13 +81,6 @@ PageBase* PageManager::Pop()
     return top;
 }
 
-/**
-  * @brief  Page switching
-  * @param  newNode: Pointer to new page
-  * @param  isPushAct: Whether it is a push action
-  * @param  stash: Parameters passed to the new page
-  * @retval None
-  */
 void PageManager::SwitchTo(PageBase* newNode, bool isPushAct, const PageBase::Stash_t* stash)
 {
     if (newNode == nullptr)
@@ -205,11 +187,6 @@ void PageManager::SwitchTo(PageBase* newNode, bool isPushAct, const PageBase::St
     }
 }
 
-/**
-  * @brief  Force the end of the life cycle of the page without animation 
-  * @param  base: Pointer to the page being executed
-  * @retval Return true if successful
-  */
 bool PageManager::FourceUnload(PageBase* base)
 {
     if (base == nullptr)
@@ -232,11 +209,6 @@ bool PageManager::FourceUnload(PageBase* base)
     return true;
 }
 
-/**
-  * @brief  Back to the main page (the page at the bottom of the stack) 
-  * @param  None
-  * @retval Return true if successful
-  */
 bool PageManager::BackHome()
 {
     /* Check whether the animation of switching pages is being executed */
@@ -256,21 +228,14 @@ bool PageManager::BackHome()
     return true;
 }
 
-/**
-  * @brief  Check if the page switching animation is being executed
-  * @param  None
-  * @retval Return true if it is executing
-  */
 bool PageManager::SwitchAnimStateCheck()
 {
-    if (AnimState.IsSwitchReq || AnimState.IsBusy)
+    if (AnimState.IsSwitchReq)
     {
         printf(
             "Page switch busy[AnimState.IsSwitchReq = %d,"
-            "AnimState.IsBusy = %d],"
             "request ignored",
-            AnimState.IsSwitchReq,
-            AnimState.IsBusy
+            AnimState.IsSwitchReq
         );
         return false;
     }
@@ -278,11 +243,6 @@ bool PageManager::SwitchAnimStateCheck()
     return true;
 }
 
-/**
-  * @brief  Page switching request check 
-  * @param  None
-  * @retval Return true if all pages are executed
-  */
 bool PageManager::SwitchReqCheck()
 {
     bool ret = false;
@@ -311,11 +271,6 @@ bool PageManager::SwitchReqCheck()
     return ret;
 }
 
-/**
-  * @brief  PPage switching animation execution end callback 
-  * @param  a: Pointer to animation
-  * @retval None
-  */
 void PageManager::onSwitchAnimFinish(lv_anim_t* a)
 {
     PageBase* base = (PageBase*)lv_anim_get_user_data(a);
@@ -332,11 +287,6 @@ void PageManager::onSwitchAnimFinish(lv_anim_t* a)
     }
 }
 
-/**
-  * @brief  Create page switching animation
-  * @param  a: Point to the animated page
-  * @retval None
-  */
 void PageManager::SwitchAnimCreate(PageBase* base)
 {
     LoadAnimAttr_t animAttr;
@@ -401,13 +351,6 @@ void PageManager::SwitchAnimCreate(PageBase* base)
     base->priv.Anim.IsBusy = true;
 }
 
-/**
-  * @brief  Set global animation properties 
-  * @param  anim: Animation type
-  * @param  time: Animation duration
-  * @param  path: Animation curve
-  * @retval None
-  */
 void PageManager::SetGlobalLoadAnimType(LoadAnim_t anim, uint16_t time, lv_anim_path_cb_t path)
 {
     if (anim > _LOAD_ANIM_LAST)
@@ -422,11 +365,6 @@ void PageManager::SetGlobalLoadAnimType(LoadAnim_t anim, uint16_t time, lv_anim_
     PM_LOG_INFO("Set global load anim type = %d", anim);
 }
 
-/**
-  * @brief  Update current animation properties, apply page custom animation
-  * @param  base: Pointer to page
-  * @retval None
-  */
 void PageManager::SwitchAnimTypeUpdate(PageBase* base)
 {
     if (base->priv.Anim.Attr.Type == LOAD_ANIM_GLOBAL)
@@ -462,11 +400,6 @@ void PageManager::SwitchAnimTypeUpdate(PageBase* base)
     }
 }
 
-/**
-  * @brief  Set animation default parameters
-  * @param  a: Pointer to animation
-  * @retval None
-  */
 void PageManager::AnimDefaultInit(lv_anim_t* a)
 {
     lv_anim_init(a);

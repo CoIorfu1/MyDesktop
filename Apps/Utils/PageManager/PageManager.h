@@ -183,7 +183,6 @@ private:
     struct
     {
         bool IsSwitchReq;              // Whether to switch request
-        bool IsBusy;                   // Is switching
         bool IsPushing;                // Whether it is in push state
 
         PageBase::AnimAttr_t Current;  // Current animation properties
