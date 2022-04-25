@@ -24,7 +24,6 @@ void Brightness::onViewLoad()
 
 void Brightness::onViewDidLoad()
 {
-    timer = lv_timer_create(onTimerUpdate, 300, this);
 }
 
 void Brightness::onViewWillAppear()
@@ -35,7 +34,7 @@ void Brightness::onViewWillAppear()
 
 void Brightness::onViewDidAppear()
 {
-
+    timer = lv_timer_create(onTimerUpdate, 300, this);
 }
 
 void Brightness::onViewWillDisappear()
@@ -47,6 +46,7 @@ void Brightness::onViewWillDisappear()
 
 void Brightness::onViewDidDisappear()
 {
+    
 }
 
 void Brightness::onViewDidUnload()
