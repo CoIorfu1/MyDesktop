@@ -3,8 +3,7 @@
 
 using namespace Page;
 
-Brightness::Brightness()
-{
+Brightness::Brightness() : timer(nullptr){
 }
 
 Brightness::~Brightness()
