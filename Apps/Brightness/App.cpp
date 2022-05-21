@@ -25,10 +25,6 @@ void App_Init()
     manager.Push("Pages/Brightness");
 }
 
-void BackHomePage(){
-    manager.BackHome();
-}
-
 void Pop(){
     manager.Pop();
 }

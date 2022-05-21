@@ -21,14 +21,6 @@ void App_Init()
     manager.Push("Pages/HomePage");
 }
 
-void BackHomePage(){
-    manager.BackHome();
-}
-
-void* Pop(void* ptr){
-    manager.Pop();
-}
-
 void Pop(){
     manager.Pop();
 }
