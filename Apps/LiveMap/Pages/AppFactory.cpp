@@ -1,5 +1,5 @@
 #include "AppFactory.h"
-#include "./Brightness/Brightness.h"
+#include "./LiveMap/LiveMap.h"
 
 
 #define APP_CLASS_MATCH(className)\
@@ -12,6 +12,6 @@ do{\
 
 PageBase* AppFactory::CreatePage(const char* name)
 {
-    APP_CLASS_MATCH(Brightness);
+    APP_CLASS_MATCH(LiveMap);
     return nullptr;
 }

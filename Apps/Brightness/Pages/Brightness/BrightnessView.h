@@ -53,4 +53,4 @@ private:
 
 }
 
-#endif // !__VIEW_H
+#endif 
