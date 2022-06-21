@@ -76,17 +76,9 @@ void Brightness::onTimerUpdate(lv_timer_t* timer)
 
 void Brightness::Update()
 {
-    if(Model.mtx.try_lock()){
-        unsigned short buf[3];
-        buf[0] = Model.GetIR();
-        lv_label_set_text_fmt(View.ui.ap3216cInfo.labelInfoGrp[0].lableValue, "%d ", buf[0]);
-
-        buf[1] = Model.GetALS();
-        lv_label_set_text_fmt(View.ui.ap3216cInfo.labelInfoGrp[1].lableValue, "%d ", buf[1]);
-
-        buf[2] = Model.GetPS();
-        lv_label_set_text_fmt(View.ui.ap3216cInfo.labelInfoGrp[2].lableValue, "%d ", buf[2]);
-        Model.mtx.unlock();
-    }
-    
+    HAL::Ap3216c_Info_t info;
+    Model.GetAp3216c_Info(&info);
+    lv_label_set_text_fmt(View.ui.ap3216cInfo.labelInfoGrp[0].lableValue, "%d ", info.IR);
+    lv_label_set_text_fmt(View.ui.ap3216cInfo.labelInfoGrp[1].lableValue, "%d ", info.ALS);
+    lv_label_set_text_fmt(View.ui.ap3216cInfo.labelInfoGrp[2].lableValue, "%d ", info.PS);
 }

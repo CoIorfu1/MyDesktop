@@ -1,5 +1,6 @@
 #include "MapConv.h"
 #include <stdio.h>
+#include <iostream>
 #include "GPS_Transform/GPS_Transform.h"
 
 using namespace::Microsoft_MapPoint;
@@ -8,7 +9,7 @@ using namespace::Microsoft_MapPoint;
 #  define constrain(amt,low,high) ((amt)<(low)?(low):((amt)>(high)?(high):(amt)))
 #endif
 
-char MapConv::dirPath[] = "./MAP";
+char MapConv::dirPath[] = "./Map";
 //char MapConv::extName[] = "bin";
 int16_t MapConv::levelMin = 7;
 int16_t MapConv::levelMax = 16;
@@ -78,6 +79,7 @@ int MapConv::ConvertMapPath(int32_t x, int32_t y, char* path, uint32_t len)
 {
     int32_t tileX = x / priv.tileSize;
     int32_t tileY = y / priv.tileSize;
+
     int ret = snprintf(
                   path, len,
                   "%s/%d/%d/%d.png",
@@ -86,7 +88,6 @@ int MapConv::ConvertMapPath(int32_t x, int32_t y, char* path, uint32_t len)
                   tileX,
                   tileY
               );
-
     return ret;
 }
 

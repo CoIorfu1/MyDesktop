@@ -1,7 +1,7 @@
 #ifndef __HAL_H
 #define __HAL_H
 
-#include "../nmealib/include/nmea.h"
+#include "../nmealib/src/nmea/nmea.h"
 #include <stdint.h>
 #include <atomic>
 

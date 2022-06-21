@@ -1,3 +1,4 @@
+#include <iostream>
 #include "LiveMap.h"
 #include "Config.h"
 
@@ -134,7 +135,6 @@ void LiveMap::CheckPosition()
 
     HAL::GPS_Info_t gpsInfo;
     Model.GetGPS_Info(&gpsInfo);
-
     mapLevelCurrent = lv_slider_get_value(View.ui.zoom.slider);
     if (mapLevelCurrent != Model.mapConv.GetLevel())
     {
@@ -147,6 +147,13 @@ void LiveMap::CheckPosition()
         gpsInfo.longitude, gpsInfo.latitude,
         &mapX, &mapY
     );
+    if (!gpsInfo.isVaild)
+    {
+        mapX = 13925632;
+        mapY = 6811392;
+    }
+    // mapX = 13925632;
+    // mapY = 6811392;
     Model.tileConv.SetFocusPos(mapX, mapY);
 
     if (GetIsMapTileContChanged())
@@ -257,10 +264,13 @@ void LiveMap::MapTileContReload()
     {
         TileConv::Point_t pos;
         Model.tileConv.GetTilePos(i, &pos);
-
         char path[64];
         Model.mapConv.ConvertMapPath(pos.x, pos.y, path, sizeof(path));
-
         View.SetMapTileSrc(i, path);
     }
+}
+
+void LiveMap::UpdateDelay(uint32_t ms)
+{
+    priv.lastMapUpdateTime = lv_tick_get() - 1000 + ms;
 }

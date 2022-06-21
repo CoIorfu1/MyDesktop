@@ -99,10 +99,10 @@ int Account::Publish(){
             param.recv = iter;
             ret = callback(iter, &param);
             //* param->data_p->ReadBuffer(des_p, param.size);
-            printf("publish to %s done\n", iter->ID);
+            //printf("publish to %s done\n", iter->ID);
         }
         else{
-            printf("sub[%s] not register callback\n", iter->ID);
+            //printf("sub[%s] not register callback\n", iter->ID);
         }
     }
     return ret;
@@ -135,7 +135,7 @@ int Account::Pull(Account* pub, void* des_p, uint32_t size){
         //* read commit cache
         std::shared_ptr<Buffer> rBuf = PingPongBuffer_GetReadBuf(&pub->priv.BufferManager);
         rBuf->ReadBuffer(des_p, size);
-        printf("read commit cache\n");
+        //printf("read commit cache\n");
     }
     return ret;
 }
@@ -164,7 +164,7 @@ int Account::Notify(Account* pub, const void* data_p, uint32_t size){
         //* memcpy(pub.des_p, param->pull_p, param->size);
     }
     else{
-        printf("pub no register callback\n");
+        //printf("pub no register callback\n");
         return RES_NO_CALLBACK;
     }
     return ret;

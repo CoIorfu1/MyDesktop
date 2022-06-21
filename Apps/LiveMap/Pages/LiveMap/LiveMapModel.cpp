@@ -31,8 +31,8 @@ void LiveMapModel::GetGPS_Info(HAL::GPS_Info_t* info)
     /* Use default location */
     if (!info->isVaild)
     {
-        info->longitude = 32;
-        info->latitude = 119;
+        info->longitude = 11900;
+        info->latitude = 3200;
     }
 }
 

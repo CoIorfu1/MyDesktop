@@ -31,13 +31,10 @@ int BrightnessModel::onEvent(Account* account, Account::EventParam_t* param)
         printf("sub account do't match!\n");
         return -1;
     }
-
-    BrightnessModel* instance = (BrightnessModel*)account->UserData;
-    if(instance->mtx.try_lock()){
-        param->data_p->ReadBuffer(&instance->ap3216cInfo, sizeof(HAL::Ap3216c_Info_t));
-        printf("read %d, %d, %d", instance->ap3216cInfo.IR, instance->ap3216cInfo.ALS, instance->ap3216cInfo.PS);
-        instance->mtx.unlock();
-    }
-    
     return 0;
+}
+
+void BrightnessModel::GetAp3216c_Info(HAL::Ap3216c_Info_t* info)
+{
+    account->Pull("Ap3216c", info, sizeof(HAL::Ap3216c_Info_t));
 }

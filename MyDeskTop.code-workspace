@@ -61,7 +61,8 @@
 			"thread": "cpp",
 			"cinttypes": "cpp",
 			"pthread.h": "c",
-			"stdatomic.h": "c"
+			"stdatomic.h": "c",
+			"context.h": "c"
 		}
 	}
 }
